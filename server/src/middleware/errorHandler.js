@@ -9,8 +9,6 @@ export function notFoundHandler(req, res) {
   });
 }
 
-// Express recognises an error handler by its 4 parameters, so keep `next` even if unused.
-// eslint-disable-next-line no-unused-vars
 export function errorHandler(err, req, res, next) {
   let status = 500;
   let code = 'INTERNAL_ERROR';
@@ -32,9 +30,16 @@ export function errorHandler(err, req, res, next) {
     status = 413;
     code = 'BODY_TOO_LARGE';
     message = 'Request body too large';
+  } else if (err.code === 11000) {
+    status = 409;
+    code = 'DUPLICATE';
+    message = 'Resource already exists';
+  } else if (err.name === 'CastError') {
+    status = 400;
+    code = 'INVALID_ID';
+    message = 'Invalid identifier';
   }
 
-  // Unexpected errors: log details server-side, but NEVER leak them to the client.
   if (status >= 500) {
     logger.error('request.failed', { requestId: req.id, error: err.message, stack: err.stack });
   }

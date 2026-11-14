@@ -9,7 +9,6 @@ const server = createApp().listen(env.PORT, () => {
   logger.info('api.listening', { port: env.PORT });
 });
 
-// Graceful shutdown: finish in-flight requests, then close the DB.
 async function shutdown(signal) {
   logger.info('api.stopping', { signal });
   server.close(async () => {
