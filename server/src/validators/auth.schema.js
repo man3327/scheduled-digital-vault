@@ -7,3 +7,7 @@ export const registerBody = z.strictObject({
   email,
   password: z.string().min(8).max(128),
 });
+export const loginBody = z.strictObject({
+  email,
+  password: z.string().min(1).max(128),
+});
