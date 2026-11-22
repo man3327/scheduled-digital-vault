@@ -8,7 +8,7 @@ import { requestId } from './middleware/requestId.js';
 import { csrfGuard } from './middleware/csrf.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.routes.js';
-
+import vaultRoutes from './routes/vault.routes.js';
 export function createApp() {
   const app = express();
 
@@ -30,7 +30,7 @@ export function createApp() {
 
   app.use('/api/v1', csrfGuard);
   app.use('/api/v1/auth', authRoutes);
-
+  app.use('/api/v1/vaults', vaultRoutes);
   app.use(notFoundHandler);
   app.use(errorHandler);
 

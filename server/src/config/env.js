@@ -23,6 +23,8 @@ const schema = z.object({
   JWT_EXPIRES_IN: z.string().default('24h'),
   BCRYPT_ROUNDS: numberString(12).default(12),
   COOKIE_SECURE: booleanString.default(false),
+  STORAGE_DIR: z.string().default('./storage'),
+  CLIENT_ORIGIN: z.string().min(1).default('http://localhost:3000'),
 });
 
 const parsed = schema.safeParse(process.env);

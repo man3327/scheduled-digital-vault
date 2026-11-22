@@ -38,8 +38,11 @@ export function errorHandler(err, req, res, next) {
     status = 400;
     code = 'INVALID_ID';
     message = 'Invalid identifier';
+  } else if (err.code === 'LIMIT_FILE_SIZE') {
+    status = 413;
+    code = 'FILE_TOO_LARGE';
+    message = 'File exceeds the size limit';
   }
-
   if (status >= 500) {
     logger.error('request.failed', { requestId: req.id, error: err.message, stack: err.stack });
   }
